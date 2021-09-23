@@ -11,24 +11,50 @@
             <RowDefinition/>
             <RowDefinition Height="125"/>
         </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
         <MediaElement x:Name="video" 
                       LoadedBehavior="Manual"
                       Volume="0"
-                      Source="D:/Tutorials/Development/CSharp\Семен Алексеев/Видеокурс C# 5.0. От простого к сложному/video/01_06.mp4"
-                      
-                      Grid.Row="0" />
-        <Grid Grid.Row="1">
+                      MediaOpened="video_MediaOpened"
+                      Grid.Row="0" 
+                      Grid.Column="0"/>
+        <Grid x:Name="menu"
+              Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="1">
+                <ListBox x:Name="playlist">
+                    <ListBoxItem>
+                        <StackPanel>
+                            <TextBlock Text="Hello"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <StackPanel>
+                            <TextBlock Text="Hi"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                </ListBox>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Label x:Name="time" FontSize="12" HorizontalAlignment="Center">00:00</Label>
-            <Slider x:Name="progressBar"
+            <Slider x:Name="mediaTimeLine"
                          Grid.Row="1"
                          Minimum="0"
-                         Maximum="100"
                          Value="0"
+                         ValueChanged="mediaTimeLine_ValueChanged"
                          Height="5"
                          Foreground="red"
                     Background="Black"/>

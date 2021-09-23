@@ -1,20 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace CustomMediaPlayer
 {
@@ -34,11 +20,13 @@ namespace CustomMediaPlayer
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.ShowDialog();
             if(openFile.FileName.Length!=0)video.Source = new Uri(openFile.FileName);
+            mediaTimeLine.Value = mediaTimeLine.Minimum;
+            video.Play();
         }
 
         private void pause_Btn_Click(object sender, RoutedEventArgs e)
         {
-            time.Content = video.Position.Seconds.ToString();
+            //time.Content = video.Position.ToString(@"/mm/:ss");
             if(onPaused)
             {
                 volume.Value = 15;
@@ -60,6 +48,19 @@ namespace CustomMediaPlayer
         private void stop_Btn_Click(object sender, RoutedEventArgs e)
         {
             video.Stop();
+            mediaTimeLine.Value = mediaTimeLine.Minimum;
+        }
+
+        private void mediaTimeLine_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int sliderValue = (int)mediaTimeLine.Value;
+            TimeSpan time = new TimeSpan(0, 0, 0, 0, sliderValue);
+            video.Position = time;
+        }
+
+        private void video_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            mediaTimeLine.Maximum = video.NaturalDuration.TimeSpan.TotalMilliseconds;
         }
     }
 }
