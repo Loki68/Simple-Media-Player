@@ -19,8 +19,13 @@ namespace CustomMediaPlayer
         {
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.ShowDialog();
-            if(openFile.FileName.Length!=0)video.Source = new Uri(openFile.FileName);
+
+            if (openFile.FileName.Length == 0) return;
+
+            video.Source = new Uri(openFile.FileName);
+            time.Content=openFile.SafeFileName;
             mediaTimeLine.Value = mediaTimeLine.Minimum;
+            volume.Value = 20;
             video.Play();
         }
 
