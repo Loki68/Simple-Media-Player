@@ -1,4 +1,5 @@
 ﻿using CustomMediaPlayer.Models;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace CustomMediaPlayer.ViewModels
@@ -6,8 +7,6 @@ namespace CustomMediaPlayer.ViewModels
     interface IPlayerViewModel
     {
         IPlayerModel SelectedMediaFile { get; set; }
-        //ObservableCollection
-        ICommand PlayCommand();
-        ICommand PauseCommand();
+        ObservableCollection<IPlayerModel> Files { get; set; }
     }
 }
