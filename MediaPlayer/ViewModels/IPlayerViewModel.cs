@@ -1,12 +1,11 @@
-﻿using CustomMediaPlayer.Models;
+﻿using CustomMediaPlayer.DTO;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace CustomMediaPlayer.ViewModels
 {
     interface IPlayerViewModel
     {
-        IPlayerModel SelectedMediaFile { get; set; }
-        ObservableCollection<IPlayerModel> Files { get; set; }
+        MediaContentDescription SelectedMediaFile { get; set; }
+        ObservableCollection<MediaContentDescription> Files { get; set; }
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace CustomMediaPlayer.Services
+﻿using CustomMediaPlayer.DTO;
+
+namespace CustomMediaPlayer.Services
 {
     interface IFileDialogService
     {
-        void OpenSingleFile();
+        MediaContentDescription OpenSingleFile();
         void OpenSeveralFiles();
     }
 }

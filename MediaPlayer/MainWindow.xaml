@@ -28,6 +28,10 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" VerticalAlignment="Center">
+                <TextBlock Text="Список воспроизведения"/>
+            </StackPanel>
+            
             <ScrollViewer Grid.Row="1">
                 <ListBox x:Name="playlist">
                     <ListBoxItem>
@@ -56,7 +60,6 @@
                          Value="0"
                          ValueChanged="mediaTimeLine_ValueChanged"
                          Height="5"
-                         Foreground="red"
                     Background="Black"/>
             <StackPanel x:Name="controlPanel"   
                     Grid.Row="2"
