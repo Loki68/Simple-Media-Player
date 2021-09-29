@@ -1,11 +1,12 @@
-﻿namespace CustomMediaPlayer.Services
+﻿using CustomMediaPlayer.DTO;
+using System.Collections.Generic;
+
+namespace CustomMediaPlayer.Services
 {
     interface IPlaylistService
     {
-        void CreatePlaylist();
         void GetPlaylist();
         void GetPlaylistCollection();
-        void UpdatePlaylist();
-        void DeletePlaylist();
+        void CreateOrUpdatePlaylist(string playlistPath, List<MediaContentDescription> playlist);
     }
 }

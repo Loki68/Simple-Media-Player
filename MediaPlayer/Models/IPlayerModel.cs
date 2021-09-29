@@ -1,5 +1,6 @@
 ﻿using CustomMediaPlayer.DTO;
 using CustomMediaPlayer.Services;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace CustomMediaPlayer.Models
@@ -9,12 +10,10 @@ namespace CustomMediaPlayer.Models
         //string FileName { get; set; }
         //string FullFileName { get; set; }
 
-        MediaContentDescription MediaContent { get; set; }
-        ObservableCollection<MediaContentDescription> Playlist { get; set; }
+        //MediaContentDescription MediaContent { get; set; }
+        List<MediaContentDescription> Playlist { get;  }
+        MediaContentDescription MdiaContentDescription { get; set; }
 
-        void SetFileDialogService(IFileDialogService fileService);
-        void SetPlaylistService(IPlaylistService playlistService);
-
-        void GetSingleFileInfo();
+        void OpenFiles();
     }
 }

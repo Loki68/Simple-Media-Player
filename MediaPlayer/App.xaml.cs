@@ -1,5 +1,6 @@
 ﻿using CustomMediaPlayer.Models;
 using CustomMediaPlayer.Services;
+using CustomMediaPlayer.ViewModels;
 using System.Windows;
 
 namespace CustomMediaPlayer
@@ -15,9 +16,14 @@ namespace CustomMediaPlayer
 
             IPlaylistService playlistService = new PlaylistService();
 
-            IPlayerModel playerModel = new PlayerModel();
-            playerModel.SetFileDialogService(fileDialogService);
-            playerModel.SetPlaylistService(playlistService);
+            IPlayerModel playerModel = new PlayerModel(fileDialogService,playlistService);
+
+            MainWindow = new MainWindow
+            {
+                DataContext = new PlayerViewModel(playerModel)
+            };
+
+            MainWindow.Show();
 
             base.OnStartup(e);
         }

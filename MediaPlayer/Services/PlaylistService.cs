@@ -1,12 +1,16 @@
-﻿using System;
+﻿using CustomMediaPlayer.DTO;
+using System;
+using System.Collections.Generic;
 
 namespace CustomMediaPlayer.Services
 {
     class PlaylistService : IPlaylistService
     {
-        public void CreatePlaylist()
+        private readonly IFileService _fileService;
+
+        public PlaylistService()
         {
-            throw new NotImplementedException();
+            _fileService = new FileService();
         }
 
         public void DeletePlaylist()
@@ -24,9 +28,9 @@ namespace CustomMediaPlayer.Services
             throw new NotImplementedException();
         }
 
-        public void UpdatePlaylist()
+        public void CreateOrUpdatePlaylist(string playlistPath,List<MediaContentDescription> playlist)
         {
-            throw new NotImplementedException();
+            _fileService.WritePlaylist(playlistPath, playlist);
         }
     }
 }

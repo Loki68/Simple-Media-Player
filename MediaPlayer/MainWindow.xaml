@@ -2,10 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CustomMediaPlayer"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="clr-namespace:CustomMediaPlayer.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:PlayerViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Dream player" Height="518" Width="1054">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -19,67 +18,101 @@
         <MediaElement x:Name="video" 
                       LoadedBehavior="Manual"
                       Volume="0"
+                      Source="{Binding SelectedMediaFile.FileAddress}"
                       MediaOpened="video_MediaOpened"
                       Grid.Row="0" 
                       Grid.Column="0"/>
         <Grid x:Name="menu"
               Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition/>
+                <RowDefinition Height="90"/>
+                <RowDefinition Height="49*"/>
+                <RowDefinition Height="20*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" VerticalAlignment="Center">
+
+            <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="Список воспроизведения"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Margin="10" Padding="5" Content="Play Order" Command="{Binding AddRangeCommand}"/>
+                    <Button Margin="10" Padding="5" Content="Repeat order" Command="{Binding AddRangeCommand}"/>
+                </StackPanel>
             </StackPanel>
-            
-            <ScrollViewer Grid.Row="1">
-                <ListBox x:Name="playlist">
-                    <ListBoxItem>
-                        <StackPanel>
-                            <TextBlock Text="Hello"/>
+
+
+            <ListBox x:Name="playlist" 
+                     Grid.Row="1"
+                         Margin="5"
+                         ItemsSource="{Binding PlayList}"
+                         SelectedItem="{Binding SelectedMediaFile}"
+                         ScrollViewer.CanContentScroll="True">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <Label Content="Id"
+                                       FontWeight="Bold"/>
+                            <TextBlock Text="{Binding FileId}"/>
+                            <Label Content="Name"
+                                       FontWeight="Bold"/>
+                            <TextBlock Text="{Binding FileName}"/>
+                            <Label Content="Address"
+                                       FontWeight="Bold"/>
+                            <TextBlock Text="{Binding FileAddress}"/>
                         </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <StackPanel>
-                            <TextBlock Text="Hi"/>
-                        </StackPanel>
-                    </ListBoxItem>
-                </ListBox>
-            </ScrollViewer>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
+                <Button Margin="10" Padding="5" Content="Add files" Command="{Binding AddCommand}"/>
+                <Button Margin="10" Padding="5" Content="Clear playlist" Command="{Binding ClearCommand}"/>
+                <Button Margin="10" Padding="5" Content="Save playlist"/>
+            </StackPanel>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+        <Grid Grid.Row="1" 
+              Grid.Column="0" 
+              Grid.ColumnSpan="2"
+              Background="LightGray">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Label x:Name="time" FontSize="12" HorizontalAlignment="Center">00:00</Label>
+
             <Slider x:Name="mediaTimeLine"
                          Grid.Row="1"
+                         Margin="10,0"
                          Minimum="0"
                          Value="0"
                          ValueChanged="mediaTimeLine_ValueChanged"
                          Height="5"
                     Background="Black"/>
-            <StackPanel x:Name="controlPanel"   
-                    Grid.Row="2"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-                <Button x:Name="pause_Btn" Margin="0,10,10,10" Click="pause_Btn_Click">Play/Pause</Button>
-                <Button x:Name="stop_Btn" Margin="0,10,10,10" Click="stop_Btn_Click">Stop</Button>
-                <Button x:Name="open_Btn" Margin="0,10,10,10" Click="open_Btn_Click">Open</Button>
 
-                <Slider x:Name="volume"
-                    Margin="10"
-                    Height="25"
-                    Value="0"
-                    Minimum="0"
-                    Maximum="100" Width="145"
-                    SelectionStart="0"
-                    IsSelectionRangeEnabled="True"
-                    ValueChanged="volume_ValueChanged"/>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <StackPanel x:Name="controlPanel"   
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+                    <Button x:Name="pause_Btn" Margin="10" Click="pause_Btn_Click">Play/Pause</Button>
+                    
+                    <Slider x:Name="volume"
+                        Margin="10"
+                        Height="25"
+                        Value="0"
+                        Minimum="0"
+                        Maximum="100" Width="145"
+                        SelectionStart="0"
+                        IsSelectionRangeEnabled="True"
+                        ValueChanged="volume_ValueChanged"/>
+                </StackPanel>
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="playList_Btn" Margin="50,10">Playlist</Button>
+                    <Button x:Name="open_Btn" 
+                            Margin="0,10,10,10" >
+                        Settings
+                    </Button>
+                </StackPanel>
             </StackPanel>
         </Grid>
-        
+
     </Grid>
 </Window>

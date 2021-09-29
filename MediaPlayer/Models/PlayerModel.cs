@@ -1,67 +1,44 @@
 ﻿using CustomMediaPlayer.BaseINPC;
 using CustomMediaPlayer.DTO;
 using CustomMediaPlayer.Services;
-using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace CustomMediaPlayer.Models
 {
     class PlayerModel : BaseINPCImplementation, IPlayerModel
     {
-        //private string _fileName;
+        
+        private readonly IFileDialogService _fileDialogService;
+        private readonly IPlaylistService _playlistService;
 
-        //public string FileName
-        //{
-        //    get => _fileName;
-        //    set => _fileName = value;
-        //}
+        private List<MediaContentDescription> _playlist;
+        private MediaContentDescription _mediaContentDescription;
 
-
-        //private string _fullFileName;
-
-        //public string FullFileName
-        //{
-        //    get => _fullFileName; 
-        //    set => _fullFileName = value; 
-        //}
-        private MediaContentDescription _mediaContent;
-        private ObservableCollection<MediaContentDescription> _playlist;
-
-        public MediaContentDescription MediaContent
-        {
-            get => _mediaContent; 
-            set 
-            { 
-                _mediaContent = value;
-                OnPropertyChanged(nameof(MediaContent));
-            }
-        }
-
-        public ObservableCollection<MediaContentDescription> Playlist
-        {
-            get => _playlist; 
-            set { _playlist = value; }
-        }
-
-
-        //добавить допинфу к данным-время и т.д.
-
-        IFileDialogService _fileDialogService;
-        IPlaylistService _playlistService;
-
-        public void SetFileDialogService(IFileDialogService fileDialogService)
+        public PlayerModel(
+            IFileDialogService fileDialogService, 
+            IPlaylistService playlistService)
         {
             _fileDialogService = fileDialogService;
-        }
-
-        public void SetPlaylistService(IPlaylistService playlistService)
-        {
             _playlistService = playlistService;
         }
 
-        public void GetSingleFileInfo()
+        public List<MediaContentDescription> Playlist
         {
-            _mediaContent = _fileDialogService.OpenSingleFile();
+            get => _playlist;
         }
+
+        public MediaContentDescription MdiaContentDescription 
+        {
+            get => _mediaContentDescription;
+            set => _mediaContentDescription = value;
+        }
+        //добавить допинфу к данным-время и т.д.
+
+        public void OpenFiles()
+        {
+            _playlist = _fileDialogService.OpenFiles();
+        }
+
     }
 }
